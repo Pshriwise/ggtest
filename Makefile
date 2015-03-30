@@ -1,14 +1,13 @@
 
-#ACIS_CGM_DIR = /home/shriwise/dagmc_blds/cgm_dev
-#OCC_CGM_DIR = /home/shriwise/occ_blds/cgm
-MOAB_DIR = /home/shriwise/dagmc_blds/moabs/
-OCC_CGM_MAKE = /home/shriwise/oce_blds/cgm/lib/cgm.make
-MOAB_MAKE = /home/shriwise/oce_blds/moab/lib/moab.make
 
-#OCC_CGM_MAKE = /home/shriwise/dagmc_blds/cgm_dev/lib/cgm.make
-#MOAB_MAKE = /home/shriwise/dagmc_blds/moabs/lib/moab.make
+CGM_MAKE = /home/shriwise/dagmc_blds/cgm_dev/lib/cgm.make
+MOAB_MAKE = /home/shriwise/dagmc_blds/moabs/lib/moab.make
 
-include ${OCC_CGM_MAKE}
+#CGM_MAKE = /home/shriwise/occ_blds/cgm/lib/cgm.make
+#MOAB_MAKE = /home/shriwise/occ_blds/moab/lib/moab.make
+
+
+include ${CGM_MAKE}
 include ${MOAB_MAKE}
 
 build: occ acis
@@ -25,8 +24,7 @@ occ_cube_test:
 
 measure_test: 
 
-	g++ dagmc_measure.cpp -o measure_test -g -I/$(MOAB_DIR)/include \
-	-L/$(MOAB_DIR)/lib -lMOAB -ldagmc
+	g++ dagmc_measure.cpp -o measure_test -g $(MOAB_INCLUDES) $(DAGMC_LIBS_LINK)
 
 clean:
 	rm ggtest_acis ggtest_occ measure_test occ_cube_test a.out
